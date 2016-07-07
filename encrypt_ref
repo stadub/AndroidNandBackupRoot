@@ -1,0 +1,36 @@
+adb forward tcp:5555 tcp:5555
+adb shell
+su
+/system/xbin/busybox nc -l -p 5555 -e $( dd if=/dev/block/mmcblk0 | gzip -  )
+
+
+adb forward tcp:5555 tcp:5555
+cd /path/to/store/the/backup
+
+cat mmcblk0.raw | nc 127.0.0.1 5555
+
+
+
+nc 127.0.0.1 5555 | pv -i 0.5 | ./7-Zip/7z.exe -si{mmcblk0} -p{m0yparol} -o ../../.. -v{500m} mmcblk0 
+
+ openssl des3 -salt -k "m0yparol" | split -b 500m - mmcblk0.raw.gz
+
+
+nc 127.0.0.1 5555 | pv -i 0.5 | openssl des3 -salt -k "m0yparol" > mmcblk0.raw.gz
+
+
+innobackupex --stream=tar . | gzip - | openssl des3 -salt -k "password" > backup.tar.gz.des3
+
+
+https://habrahabr.ru/post/236397/
+
+
+adb shell su -c dd if=/dev/block/mmcblk0p12 | dd of=userdata.img
+
+
+http://handynotes.ru/2010/01/unix-utility-netcat.html
+
+
+
+/system/xbin/busybox nc -l -p 5555 -e dd if=/dev/block/mmcblk0
+

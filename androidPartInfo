@@ -1,0 +1,11 @@
+/dev/block/mmcblk1p4
+/data/app ext4
+rw,seclabel,relatime,user_xattr,acl,barrier=1,data=ordered 0 0
+
+/dev/block/platform/hi_mci.1/by-name/userdata
+/data ext4
+rw,seclabel,nosuid,nodev,noatime,user_xattr,acl,barrier=1,data=ordered,noauto_da_alloc,discard 0 0
+
+/dev/block/mmcblk1p4
+/data/app ext4
+rw,seclabel,nosuid,nodev,noatime,user_xattr,acl,barrier=1,data=ordered,noauto_da_alloc,discard 0 0

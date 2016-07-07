@@ -1,0 +1,28 @@
+ fdisk -ul /dev/block/mmcblk1
+ 
+ du -d 1 -cgkmrx
+ 
+ swapon /dev/block/mmcblk1p2
+ 
+ /data/local/
+
+ramdisk rootfs is read only.
+mount -o remount,rw /
+http://stackoverflow.com/questions/19920144/read-only-file-system-android-is-mnt-not-system-resolved
+
+
+http://stackoverflow.com/questions/5467881/a-terminal-command-for-a-rooted-android-to-remount-system-as-read-write
+adb remount
+
+http://stackoverflow.com/questions/19920144/read-only-file-system-android-is-mnt-not-system-resolved
+
+
+
+http://android.stackexchange.com/questions/6558/how-can-i-run-a-script-on-boot
+script dir
+
+mkdir /mnt/dev1
+mount -o rw -t etx4 /dev/block/mmcblk1p3 /system
+
+
+root@hwp6_u06:/data # cp -rf ./data/* /mnt/mmc1

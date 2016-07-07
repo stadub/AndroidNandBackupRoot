@@ -1,0 +1,33 @@
+adb forward tcp:5555 tcp:5555
+
+
+mkdir /sys_
+mount -o rw -t ext4 /dev/block/mmcblk0p16 /sys_
+cp /sys_/xbin/busybox /system
+umount /sys_
+
+/system/busybox nc -l -p 5555 -e /system/busybox dd if=/dev/block/mmcblk0
+
+#restore
+adb forward tcp:5555 tcp:5555
+cat mmcblk0.raw |  pv -i 0.5 | nc 127.0.0.1 5555
+/system/busybox nc -l -p 5555 -e /system/busybox dd of=/dev/block/mmcblk0
+
+
+/system/busybox nc -l -p 5555 -e /system/busybox dd of=/dev/block/mmcblk1;
+
+/system/busybox nc -l -p 5555 -e /system/busybox dd of=/dev/block/mmcblk0
+
+#backup i5800
+busybox nc -l -p 5555 -e dd if=/dev/block/stl4
+nc 127.0.0.1  5555 | pv -i 0.5 > efs.rfs
+
+
+busybox nc -l -p 5555 -e dd if=/dev/block/stl6
+nc 127.0.0.1  5555 | pv -i 0.5 > factoryfs.rfs
+
+busybox nc -l -p 5555 -e dd if=/dev/block/bml5
+nc 127.0.0.1  5555 | pv -i 0.5 > zImage
+
+busybox nc -l -p 5555 -e dd if=/dev/block/bml10
+nc 127.0.0.1  5555 | pv -i 0.5 > modem.bin
