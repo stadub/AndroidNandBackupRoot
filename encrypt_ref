@@ -11,12 +11,12 @@ cat mmcblk0.raw | nc 127.0.0.1 5555
 
 
 
-nc 127.0.0.1 5555 | pv -i 0.5 | ./7-Zip/7z.exe -si{mmcblk0} -p{m0yparol} -o ../../.. -v{500m} mmcblk0 
+nc 127.0.0.1 5555 | pv -i 0.5 | ./7-Zip/7z.exe -si{mmcblk0} -p{password} -o ../../.. -v{500m} mmcblk0 
 
- openssl des3 -salt -k "m0yparol" | split -b 500m - mmcblk0.raw.gz
+ openssl des3 -salt -k "password" | split -b 500m - mmcblk0.raw.gz
 
 
-nc 127.0.0.1 5555 | pv -i 0.5 | openssl des3 -salt -k "m0yparol" > mmcblk0.raw.gz
+nc 127.0.0.1 5555 | pv -i 0.5 | openssl des3 -salt -k "password" > mmcblk0.raw.gz
 
 
 innobackupex --stream=tar . | gzip - | openssl des3 -salt -k "password" > backup.tar.gz.des3
